@@ -11,6 +11,9 @@
 
 int main(void)
 {	
+	uint8_t counter_flag = 0;
+	uint8_t i = 0;
+	
 	pushButtonInit(BTN_0);
 	Led_Init(LED_0);
     while (1) 
@@ -18,17 +21,24 @@ int main(void)
 		if (pushButtonGetStatus(BTN_0) == Pressed)
 		{
 			Led_On(LED_0);
-			for (uint8_t i = 0 ; i < 100 ; i++)
+			counter_flag = 1;
+			
+			while(counter_flag  > 0)
 			{
-				if (pushButtonGetStatus(BTN_0) == Pressed)
+				for (i = 0 ; i < 100 ; i++)
 				{
-					i = 0;
+					if (pushButtonGetStatus(BTN_0) == Pressed)
+					{
+						counter_flag++;
+					}
+					else
+					{
+						/*Do nothing*/
+					}
+					softwareDelayMs(10);
 				}
-				else
-				{
-					/*Do nothing*/
-				}
-				softwareDelayMs(10);
+				counter_flag--;
+				i = 0;
 			}
 		}
 		else
