@@ -13,8 +13,6 @@
 
 #define BTN_MAX_NUM		(2)
 
-#define DEBOUNCING_TIME	(50)
-
 #define BTN_0_GPIO	GPIOC
 #define BTN_0_BIT	BIT4
 
