@@ -144,7 +144,7 @@ void timer0SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency)
 	else
 	{
 		TCNT0 = u8_frequency;
-		OCR0  = u8_frequency + (((uint16_t)u8_dutyCycle * (255 - u8_frequency)) / 100);
+		OCR0  = u8_frequency + (((uint16_t)u8_dutyCycle * (u8_frequency)) / 100);
 
 		TCCR0 &= T0_PRESCALER_CLEAR_MASK; //Stopping the counter
 		TCCR0 |= T0_PRESCALER_8;  //Loading the timer with prescaler_8(0.5us tick)
@@ -283,7 +283,7 @@ void timer1SwPWM(uint8_t u8_dutyCycle,uint16_t u16_frequency)
 	else
 	{
 		TCNT1 = u16_frequency;
-		OCR1A  = u16_frequency + (((uint16_t)u8_dutyCycle * (65535 - u16_frequency)) / 100);
+		OCR1A  = u16_frequency + (((uint16_t)u8_dutyCycle * (u16_frequency)) / 100);
 
 		TCCR1 &= T1_PRESCALER_CLEAR_MASK; //Stopping the counter
 		TCCR1 |= T1_PRESCALER_8;  //Loading the timer with prescaler_8(0.5us tick)
@@ -298,7 +298,7 @@ void timer1SwPWM(uint8_t u8_dutyCycle,uint16_t u16_frequency)
 		while(GET_BIT(TIFR,T1_TOV_FLAG) == 0);
 		SET_BIT(TIFR,T1_TOV_FLAG);
 
-		TCCR1 &= T1_PRESCALER_CLEAR_MASK;	//Stop timer0
+		TCCR1 &= T1_PRESCALER_CLEAR_MASK;	//Stop timer1
 		TCNT1 = 0;
 	}
 	
@@ -424,7 +424,7 @@ void timer2SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency)
 	else
 	{
 		TCNT2 = u8_frequency;
-		OCR2  = u8_frequency + (((uint16_t)u8_dutyCycle * (255 - u8_frequency)) / 100);
+		OCR2  = u8_frequency + (((uint16_t)u8_dutyCycle * (u8_frequency)) / 100);
 
 		TCCR2 &= T2_PRESCALER_CLEAR_MASK; //Stopping the counter
 		TCCR2 |= T2_PRESCALER_64;  //Loading the timer with prescaler_64(4us tick)
@@ -439,7 +439,7 @@ void timer2SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency)
 		while(GET_BIT(TIFR,T2_TOV_FLAG) == 0);
 		SET_BIT(TIFR,T2_TOV_FLAG);
 
-		TCCR2 &= T2_PRESCALER_CLEAR_MASK;	//Stop timer0
+		TCCR2 &= T2_PRESCALER_CLEAR_MASK;	//Stop timer2
 		TCNT2 = 0;
 	}
 	
