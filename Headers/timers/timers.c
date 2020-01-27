@@ -30,6 +30,9 @@
 #define OCR_T2_DELAY_MS_VALUE			(250)
 #define OCR_T2_DELAY_US_VALUE			(2)
 
+//PWM Modes
+#define PWM_NON_INVERTED_MODE			(0xA000)
+
 //Global variables used to hold the value of the timers different prescalers.
 static uint8_t gu8_t0_prescaler_value = 0;
 static uint8_t gu8_t1_prescaler_value = 0;
@@ -124,7 +127,42 @@ void timer0DelayUs(uint32_t u32_delay_in_us)
 		}	
 	}
 	TCCR0 &= T0_PRESCALER_CLEAR_MASK;
-	TCCR0 = 0;
+	TCNT0 = 0;
+	return;
+}
+
+void timer0SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency)
+{
+	if (u8_dutyCycle == 100)
+	{
+		gpioPinWrite(T0_PWM_GPIO,T0_PWM_BIT,HIGH);
+	} 
+	else if(u8_dutyCycle == 0)
+	{
+		gpioPinWrite(T0_PWM_GPIO,T0_PWM_BIT,LOW);
+	}
+	else
+	{
+		TCNT0 = u8_frequency;
+		OCR0  = u8_frequency + (((uint16_t)u8_dutyCycle * (255 - u8_frequency)) / 100);
+
+		TCCR0 &= T0_PRESCALER_CLEAR_MASK; //Stopping the counter
+		TCCR0 |= T0_PRESCALER_8;  //Loading the timer with prescaler_8(0.5us tick)
+
+		gpioPinWrite(T0_PWM_GPIO,T0_PWM_BIT,HIGH);
+			
+		while(GET_BIT(TIFR,T0_OC_FLAG) == 0);
+		SET_BIT(TIFR,T0_OC_FLAG);
+			
+		gpioPinWrite(T0_PWM_GPIO,T0_PWM_BIT,LOW);
+			
+		while(GET_BIT(TIFR,T0_TOV_FLAG) == 0);
+		SET_BIT(TIFR,T0_TOV_FLAG);
+
+		TCCR0 &= T0_PRESCALER_CLEAR_MASK;	//Stop timer0
+		TCNT0 = 0;
+	}
+			
 	return;
 }
 
@@ -141,6 +179,14 @@ void timer1Init(En_timer1Mode_t en_mode,En_timer1OC_t en_OC,En_timer1perscaler_t
 	ICR1  = u16_inputCapture;
 	TIMSK = en_interruptMask;
 	
+	if (en_mode == T1_PC_PWM_8BIT_MODE)
+	{
+		TCCR1 |= PWM_NON_INVERTED_MODE;
+	} 
+	else
+	{
+		/*Do nothing*/
+	}
 	gu8_t1_prescaler_value = en_prescal;
 	
 	return; 	
@@ -224,6 +270,40 @@ void timer1DelayUs(uint32_t u32_delay_in_us)
 	return;
 }
 
+void timer1SwPWM(uint8_t u8_dutyCycle,uint16_t u16_frequency)
+{
+	if (u8_dutyCycle == 100)
+	{
+		gpioPinWrite(T1_PWM_GPIO,T1_PWM_BIT,HIGH);
+	}
+	else if(u8_dutyCycle == 0)
+	{
+		gpioPinWrite(T1_PWM_GPIO,T1_PWM_BIT,LOW);
+	}
+	else
+	{
+		TCNT1 = u16_frequency;
+		OCR1A  = u16_frequency + (((uint16_t)u8_dutyCycle * (65535 - u16_frequency)) / 100);
+
+		TCCR1 &= T1_PRESCALER_CLEAR_MASK; //Stopping the counter
+		TCCR1 |= T1_PRESCALER_8;  //Loading the timer with prescaler_8(0.5us tick)
+
+		gpioPinWrite(T1_PWM_GPIO,T1_PWM_BIT,HIGH);
+		
+		while(GET_BIT(TIFR,T1_OCA_FLAG) == 0);
+		SET_BIT(TIFR,T1_OCA_FLAG);
+		
+		gpioPinWrite(T1_PWM_GPIO,T1_PWM_BIT,LOW);
+		
+		while(GET_BIT(TIFR,T1_TOV_FLAG) == 0);
+		SET_BIT(TIFR,T1_TOV_FLAG);
+
+		TCCR1 &= T1_PRESCALER_CLEAR_MASK;	//Stop timer0
+		TCNT1 = 0;
+	}
+	
+	return;
+}
 /************************************************************************/
 /*					Timer2 functions                                    */
 /************************************************************************/
@@ -327,6 +407,41 @@ void timer2DelayUs(uint32_t u32_delay_in_us)
 	}
 	TCCR2 &= T2_PRESCALER_CLEAR_MASK;
 	TCNT2 = 0;
+	
+	return;
+}
+
+void timer2SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency)
+{
+	if (u8_dutyCycle == 100)
+	{
+		gpioPinWrite(T2_PWM_GPIO,T2_PWM_BIT,HIGH);
+	}
+	else if(u8_dutyCycle == 0)
+	{
+		gpioPinWrite(T2_PWM_GPIO,T2_PWM_BIT,LOW);
+	}
+	else
+	{
+		TCNT2 = u8_frequency;
+		OCR2  = u8_frequency + (((uint16_t)u8_dutyCycle * (255 - u8_frequency)) / 100);
+
+		TCCR2 &= T2_PRESCALER_CLEAR_MASK; //Stopping the counter
+		TCCR2 |= T2_PRESCALER_64;  //Loading the timer with prescaler_64(4us tick)
+
+		gpioPinWrite(T2_PWM_GPIO,T2_PWM_BIT,HIGH);
+		
+		while(GET_BIT(TIFR,T2_OC_FLAG) == 0);
+		SET_BIT(TIFR,T2_OC_FLAG);
+		
+		gpioPinWrite(T2_PWM_GPIO,T2_PWM_BIT,LOW);
+		
+		while(GET_BIT(TIFR,T2_TOV_FLAG) == 0);
+		SET_BIT(TIFR,T2_TOV_FLAG);
+
+		TCCR2 &= T2_PRESCALER_CLEAR_MASK;	//Stop timer0
+		TCNT2 = 0;
+	}
 	
 	return;
 }

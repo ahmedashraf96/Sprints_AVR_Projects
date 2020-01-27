@@ -15,6 +15,39 @@
  * User Configuration Macros
  */
 
+/*Setting OCR1A/B Registers*/
+#define T1_OCR1A_SET(value)		OCR1A = value
+#define T1_OCR1B_SET(value)		OCR1B = value
+ 
+/*Timer2 Synchronous / Asynchronous operations*/
+#define T2_SYNC_OPERATION	(0)
+#define T2_ASYNC_OPERATION	(1)
+
+/*Timer0 PWM Frequencies*/
+#define T0_8KHZ		(5)
+#define T0_16KHZ	(135)
+#define T0_25KHZ	(175)
+#define T0_40KHZ	(205)
+#define T0_50KHZ	(215)
+#define T0_100KHZ	(235)
+#define T0_200KHZ	(245)
+
+/*Timer1 PWM Frequencies*/
+#define T1_40HZ		(15535)
+#define T1_80HZ		(40535)
+#define T1_160HZ	(53035)
+#define T1_320HZ	(59285)
+#define T1_640HZ	(62415)
+#define T1_800HZ	(63035)
+#define T1_1KHZ		(63535)
+#define T1_2KHZ		(64535)
+#define T1_4KHZ		(65035)
+
+/*Timer2 PWM Frequencies*/
+#define T2_1KHZ		(5)
+#define T2_2kHZ		(135)
+#define	T2_4KHZ		(195)
+
 /*PWM GPIO Pins*/
 #define T0_PWM_GPIO	GPIOD
 #define T0_PWM_BIT	BIT0
@@ -25,9 +58,6 @@
 #define T2_PWM_GPIO GPIOD
 #define T2_PWM_BIT	BIT2
 
-/*Timer2 Synchronous / Asynchronous operations*/
-#define T2_SYNC_OPERATION	(0)
-#define T2_ASYNC_OPERATION	(1)
 
 /*Timer configurations*/
 
@@ -51,7 +81,7 @@ typedef enum En_timer0Interrupt_t{
 
 // for timer 1
 typedef enum En_timer1Mode_t{
-	T1_NORMAL_MODE=0x0000,T1_COMP_MODE_OCR1A_TOP=0x0008, T1_COMP_MODE_ICR1_TOP = 0x0018
+	T1_NORMAL_MODE=0x0000,T1_COMP_MODE_OCR1A_TOP=0x0008, T1_COMP_MODE_ICR1_TOP = 0x0018 , T1_PC_PWM_8BIT_MODE = 0x0100
 }En_timer1Mode_t;
 
 typedef enum En_timer1OC_t{
@@ -133,8 +163,9 @@ void timer0DelayMs(uint16_t u16_delay_in_ms);
 void timer0DelayUs(uint32_t u32_delay_in_us);
 
 /**
- * Description:
+ * Description: Using timer0 to generate PWM signal
  * @param dutyCycle
+ * @param frequency
  */
 void timer0SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency);
 
@@ -188,10 +219,11 @@ void timer1DelayMs(uint16_t u16_delay_in_ms);
 void timer1DelayUs(uint32_t u32_delay_in_us);
 
 /**
- * Description:
+ * Description: Using timer1 to generate PWM signal
  * @param dutyCycle
+ * @param frequency
  */
-void timer1SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency);
+void timer1SwPWM(uint8_t u8_dutyCycle,uint16_t u16_frequency);
 
 
 /*===========================Timer2 Control===============================*/
@@ -242,8 +274,9 @@ void timer2DelayMs(uint16_t u16_delay_in_ms);
 void timer2DelayUs(uint32_t u32_delay_in_us);
 
 /**
- * Description:
+ * Description: Using timer0 to generate PWM signal
  * @param dutyCycle
+ * @param frequency
  */
 void timer2SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency);
 
