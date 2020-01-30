@@ -24,29 +24,29 @@
 #define T2_ASYNC_OPERATION	(1)
 
 /*Timer0 PWM Frequencies*/
-#define T0_8KHZ		(250)
-#define T0_16KHZ	(120)
-#define T0_25KHZ	(80)
-#define T0_40KHZ	(50)
-#define T0_50KHZ	(40)
-#define T0_100KHZ	(20)
-#define T0_200KHZ	(10)
+#define T0_8KHZ		(5)
+#define T0_16KHZ	(135)
+#define T0_25KHZ	(175)
+#define T0_40KHZ	(205)
+#define T0_50KHZ	(215)
+#define T0_100KHZ	(235)
+#define T0_200KHZ	(245)
 
 /*Timer1 PWM Frequencies*/
-#define T1_40HZ		(50000)
-#define T1_80HZ		(25000)
-#define T1_160HZ	(12500)
-#define T1_320HZ	(6250)
-#define T1_640HZ	(3120)
-#define T1_800HZ	(2500)
-#define T1_1KHZ		(2000)
-#define T1_2KHZ		(1000)
-#define T1_4KHZ		(500)
+#define T1_40HZ		(15535)
+#define T1_80HZ		(40535)
+#define T1_160HZ	(53035)
+#define T1_320HZ	(59285)
+#define T1_640HZ	(62415)
+#define T1_800HZ	(63035)
+#define T1_1KHZ		(63535)
+#define T1_2KHZ		(64535)
+#define T1_4KHZ		(65035)
 
 /*Timer2 PWM Frequencies*/
-#define T2_1KHZ		(250)
-#define T2_2kHZ		(120)
-#define	T2_4KHZ		(60)
+#define T2_1KHZ		(5)
+#define T2_2kHZ		(135)
+#define	T2_4KHZ		(195)
 
 /*PWM GPIO Pins*/
 #define T0_PWM_GPIO	GPIOD
@@ -163,9 +163,8 @@ void timer0DelayMs(uint16_t u16_delay_in_ms);
 void timer0DelayUs(uint32_t u32_delay_in_us);
 
 /**
- * Description: Using timer0 to generate PWM signal
+ * Description:
  * @param dutyCycle
- * @param frequency
  */
 void timer0SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency);
 
@@ -219,9 +218,8 @@ void timer1DelayMs(uint16_t u16_delay_in_ms);
 void timer1DelayUs(uint32_t u32_delay_in_us);
 
 /**
- * Description: Using timer1 to generate PWM signal
+ * Description:
  * @param dutyCycle
- * @param frequency
  */
 void timer1SwPWM(uint8_t u8_dutyCycle,uint16_t u16_frequency);
 
@@ -274,9 +272,8 @@ void timer2DelayMs(uint16_t u16_delay_in_ms);
 void timer2DelayUs(uint32_t u32_delay_in_us);
 
 /**
- * Description: Using timer0 to generate PWM signal
+ * Description:
  * @param dutyCycle
- * @param frequency
  */
 void timer2SwPWM(uint8_t u8_dutyCycle,uint8_t u8_frequency);
 

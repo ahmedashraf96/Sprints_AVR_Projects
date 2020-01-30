@@ -6,6 +6,7 @@
  */ 
 #include "dcMotor.h"
 
+/*Flags indicates starting of timer0 and timer1*/
 uint8_t gu8_t0_start_flag = 0;
 uint8_t gu8_t1_start_flag = 0;
 
