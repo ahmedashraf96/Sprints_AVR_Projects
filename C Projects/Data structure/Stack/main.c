@@ -1,26 +1,22 @@
 #include "stdio.h"
 #include "STDTYPES.h"
-#include "Stack.h"
+#include "App.h"
 
-ST_stackInfo stack;
-stack_element_t x = 0;
+api_str_type expression = "[({})]";
+api_ret_type ret_val = ZERO;
 
 int main(void)
 {
-    createStack(&stack , DEFAULT_STACK_SIZE);
+    ret_val = checkForBalancedParantheses(expression);
 
-    push(&stack , 20);
-    push(&stack , 40);
-    push(&stack , 60);
-
-    pop(&stack , &x);
-    printf("%d\n",x);
-
-    pop(&stack , &x);
-    printf("%d\n",x);
-
-    pop(&stack , &x);
-    printf("%d\n",x);
-
+    if(ret_val == BALANCED_EXP)
+    {
+        printf("Balanced expression !\n");
+    }
+    else
+    {
+        printf("Unbalanced expression !\n");
+    }
+    
     return 0;
 }

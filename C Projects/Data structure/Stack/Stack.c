@@ -4,7 +4,6 @@
 #include "Stack.h"
 
 /*Important macros*/
-#define ZERO  				(0)
 #define STACK_UNDERFLOW		(-1)
 #define STACK_OVERFLOW  	DEFAULT_STACK_SIZE
 
