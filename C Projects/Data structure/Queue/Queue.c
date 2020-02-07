@@ -4,7 +4,6 @@
 #include "Queue.h"
 
 /*Important macros*/
-#define ZERO              (0)
 #define QUEUE_OVERFLOW    DEFAULT_QUEUE_SIZE
   
 void createQueue(ST_queueInfo* info, queue_size_t maxSize)
