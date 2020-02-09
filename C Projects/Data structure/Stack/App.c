@@ -1,3 +1,4 @@
+#include "stdlib.h"
 #include "STDTYPES.h"
 #include "Stack.h"
 #include "App.h"
@@ -79,5 +80,6 @@ api_ret_type checkForBalancedParantheses(api_str_type expression)
         ret_val = BALANCED_EXP;
     }
     
+    free(api_stack.ST_data);
     return ret_val;
 }
