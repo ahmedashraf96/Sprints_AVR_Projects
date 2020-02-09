@@ -1,6 +1,9 @@
 #ifndef __STD_TYPES_H__
 #define __STD_TYPES_H__
 
+/*Zero definition*/
+#define ZERO  (0)
+
 /*Unsigned integer data types*/
 typedef unsigned char uint8_t;
 typedef unsigned short int uint16_t;

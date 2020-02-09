@@ -9,29 +9,38 @@
 #define LIST_CREATION_SUCCESS       (1)
 #define LIST_CREATION_ERROR         (-1)
 
+/*Postion of the head node*/
+#define HEAD_NODE_POSITION           (0)
+#define FIRST_NODE_POSITION          (1)
+
 /*User defined data types*/
 typedef sint8_t ll_ret_type;
 typedef uint8_t pos_type;
 typedef sint32_t data_type;
 
 /*Linked list data types*/
-typedef struct 
+typedef struct ST_node_type ST_node;
+
+struct ST_node_type
 {
     data_type ll_data;
-    ST_node * ll_next_ptr;
-}ST_node;
+    ST_node  *ll_next_ptr;
+};
+
+
 
 typedef struct 
 {
-    ST_node * ll_head_ptr;
+    ST_node  *ll_head_ptr;
 }ST_list;
 
 /*
 * Description : Creates and initializes linked list head
 * @param pointer to linked list structure
+* @param data assigned to the head node
 * @ret linked list creation status
 */
-ll_ret_type createList(ST_list *list);
+ll_ret_type createList(ST_list *list , data_type head_data);
 
 /*
 * Description : Insertes a node in a certain position in the created linked list with data.
