@@ -82,6 +82,20 @@
 #define OCR2		(*(reg_type8_t)(0x43))
 #define ASSR        (*(reg_type8_t)(0x42))
 
+
+/*USART Registers*/
+#define UDR			(*(reg_type8_t)(0x2C))
+#define UCSRA		(*(reg_type8_t)(0x2B))
+#define UCSRB		(*(reg_type8_t)(0x2A))
+#define UCSRC		(*(reg_type8_t)(0x40))
+#define UBRRH		(*(reg_type8_t)(0x40))
+#define UBRRL		(*(reg_type8_t)(0x29))
+
+/*SPI Registers*/
+#define SPDR		(*(reg_type8_t)(0x2F))
+#define SPSR		(*(reg_type8_t)(0x2E))
+#define SPCR		(*(reg_type8_t)(0x2D))
+
 /*
 * Register bit manipulation
 */
